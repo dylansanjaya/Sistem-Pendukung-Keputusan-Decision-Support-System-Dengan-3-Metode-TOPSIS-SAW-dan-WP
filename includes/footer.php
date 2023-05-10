@@ -5,7 +5,7 @@
         <div class="container">
             <hr>
             <ul class="list-inline pull-right">
-                <li>Dylan Hikma Kontol</li>
+                <li>Kelompok 9</li>
                 <li><a href="https://github.com/dylansanjaya" target="_blank"><img src="img/github.png" class="sosmed"></a></li>
             </ul>
             <ul class="list-inline">
