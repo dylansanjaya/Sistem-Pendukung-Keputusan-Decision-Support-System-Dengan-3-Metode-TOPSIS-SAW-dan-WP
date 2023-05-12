@@ -414,9 +414,6 @@ include './includes/header.php';
     <!-- edit input matrik y -->
 
     <!-- edit input nilai ideal -->
-    <h1>Pemilihan Karyawan</h1>
-        <h4><?php echo $pemilihan['keterangan']; ?></h4>
-    </div>
     <h3>Nilai Ideal</h3>
     <table class="table table-bordered">
         <tr>
