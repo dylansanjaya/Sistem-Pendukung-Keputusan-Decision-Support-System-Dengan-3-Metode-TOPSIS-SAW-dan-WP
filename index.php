@@ -14,7 +14,7 @@ include './includes/header.php';
         <h1>SPK Penerimaan Karyawan dengan metode . . .</h1>
     </div>
     <h3>Kriteria karyawan yang dibutuhkan</h3>
-    <table class="table table-bordered">
+    <table class="table table-hover">
       <tr>
           <th>Kode</th>
           <th>Nama Kriteria</th>
