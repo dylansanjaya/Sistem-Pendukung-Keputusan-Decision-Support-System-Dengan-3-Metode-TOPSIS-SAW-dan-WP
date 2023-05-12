@@ -134,7 +134,10 @@ include './includes/header.php';
 ?>
 
 <div class="col-md-12">
-    <h3>Kriteria karyawan yang dibutuhkan</h3>
+    <div class="page-header text-center">
+        <h1>Pemilihan Karyawan</h1>
+        <h4><?php echo $pemilihan['keterangan']; ?></h4>
+    </div>
     <table class="table table-bordered">
       <tr>
           <th>Kode</th>
@@ -179,10 +182,7 @@ include './includes/header.php';
           <td>20 - 40 (tahun)</td>
       </tr>
     </table>
-    <div class="page-header text-center">
-        <h1>Pemilihan Karyawan</h1>
-        <h4><?php echo $pemilihan['keterangan']; ?></h4>
-    </div>
+    
     <h3>Nilai Alternatif</h3>
     <form method="post">
         <?php
