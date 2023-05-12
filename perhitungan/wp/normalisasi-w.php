@@ -6,11 +6,11 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-include './includes/header.php';
+include '.Three-Method-SPK/includes/header.php';
 ?>
 
 <!-- ini code -->
 
 <?php
-include './includes/footer.php';
+include '.Three-Method-SPK/includes/footer.php';
 ?>
