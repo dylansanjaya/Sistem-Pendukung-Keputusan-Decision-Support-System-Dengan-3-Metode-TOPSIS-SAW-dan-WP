@@ -145,6 +145,36 @@ include './includes/header.php';
         ?>
     </table>
     <br/>
+    <!-- edit!!! -->
+    <h3>Normalisasi Matriks Y</h3>
+    <table class="table table-bordered">
+        <tr>
+            <td class="col-md-1">No</td>
+            <th class="col-md-3">Alternatif</th>
+            <th class="col-md-1">C1</th>
+            <th class="col-md-1">C2</th>
+            <th class="col-md-1">C3</th>
+            <th class="col-md-1">C4</th>
+            <th class="col-md-1">C5</th>
+            <th class="col-md-1">C6</th>
+        </tr>
+        <?php
+        for($i = 0; $i < count($alternatif); $i++) {
+            echo '<tr>
+                    <td class="col-md-1">'.($i+1).'</td>
+                    <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                    <td class="col-md-1">'.$y[0][$i].'</td>
+                    <td class="col-md-1">'.$y[1][$i].'</td>
+                    <td class="col-md-1">'.$y[2][$i].'</td>
+                    <td class="col-md-1">'.$y[3][$i].'</td>
+                    <td class="col-md-1">'.$y[4][$i].'</td>
+                    <td class="col-md-1">'.$y[5][$i].'</td>
+                </tr>';
+        }
+        ?>
+    </table>
+    <br>
+    <!-- edit -->
     <div class="row">
         <div class="col-md-6 text-left">
             <a class="btn btn-primary" href="bobot.php">&laquo; Bobot</a>
