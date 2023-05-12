@@ -11,7 +11,7 @@ include './includes/header.php';
 
 <div class="col-md-12">
     <div class="page-header">
-        <h1>SPK Penerimaan Karyawan dengan metode . . .</h1>
+        <h1>SPK Penerimaan Karyawan dengan metode TOPSIS, SAW dan WP</h1>
     </div>
     <h3>Kriteria karyawan yang dibutuhkan</h3>
     <table class="table table-bordered">
