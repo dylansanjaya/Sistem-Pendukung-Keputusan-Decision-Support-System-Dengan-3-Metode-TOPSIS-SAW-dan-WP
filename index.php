@@ -59,7 +59,7 @@ include './includes/header.php';
       </tr>
     </table>
     <p class="text-right"><a href="informasi-pemilihan.php" class="btn btn-primary">Mulai</a></p>
-    <a href="/perhitungan/wp/normalisasi-w.php">coba</a>
+    <a href="\Three-Method-SPK\perhitungan\wp\normalisasi-w.php">coba</a>
 </div>
 <?php
 include './includes/footer.php';
