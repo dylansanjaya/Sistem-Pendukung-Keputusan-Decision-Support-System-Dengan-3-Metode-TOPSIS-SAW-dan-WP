@@ -137,8 +137,7 @@ include './includes/header.php';
     <div class="page-header text-center">
         <h1>Pemilihan Karyawan</h1>
         <h4><?php echo $pemilihan['keterangan']; ?></h4>
-    </div>
-    <table class="table table-bordered">
+        <table class="table table-bordered">
       <tr>
           <th>Kode</th>
           <th>Nama Kriteria</th>
@@ -182,6 +181,8 @@ include './includes/header.php';
           <td>20 - 40 (tahun)</td>
       </tr>
     </table>
+    </div>
+
     
     <h3>Nilai Alternatif</h3>
     <form method="post">
