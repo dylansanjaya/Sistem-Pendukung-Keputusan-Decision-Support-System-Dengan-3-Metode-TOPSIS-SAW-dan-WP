@@ -1,7 +1,7 @@
 
         </div>
     </div>
-    <footer class="footer footer">
+    <footer class="footer footer" style="background-color: #e3f2fd;">
         <div class="container">
             <hr>
             <ul class="list-inline pull-right">
