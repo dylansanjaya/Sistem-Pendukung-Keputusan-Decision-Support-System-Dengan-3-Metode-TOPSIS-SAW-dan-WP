@@ -189,8 +189,8 @@ try {
     // edit input matrik y
 
     // edit input nilai ideal
-    if(!isset($_SESSION['matrik-y'])) {
-        header('Location: matrik-y.php');
+    if(!isset($_SESSION['matrik-r'])) {
+        header('Location: matrik-r.php');
         exit;
     } else {
         $req = $dbc->prepare("SELECT * FROM pemilihan WHERE id = ?");
@@ -274,8 +274,8 @@ try {
     // edit input nilai ideal
 
     // edit input jarak solusi ideal
-    if(!isset($_SESSION['nilai-ideal'])) {
-        header('Location: nilai-ideal.php');
+    if(!isset($_SESSION['matrik-r'])) {
+        header('Location: matrik-r.php');
         exit;
     } else {
         $req = $dbc->prepare("SELECT * FROM pemilihan WHERE id = ?");
@@ -382,6 +382,7 @@ include './includes/header.php';
         ?>
     </table>
     <br/>
+<<<<<<< HEAD
     <!-- edit input matrik y!!! -->
     <h3>Normalisasi Matriks Y</h3>
     <table class="table table-bordered">
@@ -466,6 +467,8 @@ include './includes/header.php';
     </table>
     <br/>
     <!-- edit input solusi ideal -->
+=======
+>>>>>>> parent of 6344ce3 (penggabungan matrik)
     <div class="row">
         <div class="col-md-6 text-left">
             <a class="btn btn-primary" href="bobot.php">&laquo; Bobot</a>
