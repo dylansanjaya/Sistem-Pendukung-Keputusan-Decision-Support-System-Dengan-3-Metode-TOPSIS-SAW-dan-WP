@@ -57,49 +57,8 @@ try {
     $dbc->commit();
 
     $_SESSION['ranking'] = true;
+    header('Location: hasil.php');
+    exit;
 } catch (PDOException $e) {
     $dbc->rollback();
 }
-
-$page_title = 'Ranking';
-
-include './includes/header.php';
-?>
-
-<div class="col-md-12">
-    <div class="page-header text-center">
-        <h1>Pemilihan Karyawan</h1>
-        <h4><?php echo $pemilihan['keterangan']; ?></h4>
-    </div>
-    <h3>Rangking</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-1">No</th>
-            <th class="col-md-8">Alternatif</th>
-            <th class="col-md-3">V</th>
-        </tr>
-        <?php
-
-        for ($i = 0; $i < count($alternatif); $i++) {
-            echo '<tr>
-                    <td class="col-md-1">'.($i+1).'</td>
-                    <td class="col-md-8">'.$alternatif[$i]['alternatif'].'</td>
-                    <td class="col-md-3">'.$v[$i].'</td>
-                </tr>';
-        }
-        ?>
-    </table>
-    <br/>
-    <div class="row">
-        <div class="col-md-6 text-left">
-            <a class="btn btn-primary" href="jarak-solusi-ideal.php">&laquo; Jarak Solusi Ideal</a>
-        </div>
-        <div class="text-right">
-            <a class="btn btn-primary" href="hasil.php">Hasil &raquo;</a>
-        </div>
-    </div>
-</div>
-
-<?php
-include './includes/footer.php';
-?>

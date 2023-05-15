@@ -85,57 +85,8 @@ try {
     $dbc->commit();
 
     $_SESSION['nilai-ideal'] = true;
+    header('Location: jarak-solusi-ideal.php');
+    exit;
 } catch (PDOException $e) {
     $dbc->rollback();
 }
-
-$page_title = 'Nilai Ideal';
-
-include './includes/header.php';
-?>
-
-<div class="col-md-12">
-    <div class="page-header text-center">
-        <h1>Pemilihan Karyawan</h1>
-        <h4><?php echo $pemilihan['keterangan']; ?></h4>
-    </div>
-    <h3>Nilai Ideal</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-3">Y</th>
-            <th class="col-md-1">C1</th>
-            <th class="col-md-1">C2</th>
-            <th class="col-md-1">C3</th>
-            <th class="col-md-1">C4</th>
-            <th class="col-md-1">C5</th>
-            <th class="col-md-1">C6</th>
-        </tr>
-        <?php
-
-        foreach ($a as $ideal => $y) {
-            echo '<tr>
-                    <td class="col-md-2">'.ucfirst($ideal).'</td>
-                    <td class="col-md-1">'.$y[0].'</td>
-                    <td class="col-md-1">'.$y[1].'</td>
-                    <td class="col-md-1">'.$y[2].'</td>
-                    <td class="col-md-1">'.$y[3].'</td>
-                    <td class="col-md-1">'.$y[4].'</td>
-                    <td class="col-md-1">'.$y[5].'</td>
-                </tr>';
-        }
-        ?>
-    </table>
-    <br/>
-    <div class="row">
-        <div class="col-md-6 text-left">
-            <a class="btn btn-primary" href="matrik-r.php">&laquo; Matrik R</a>
-        </div>
-        <div class="text-right">
-            <a class="btn btn-primary" href="jarak-solusi-ideal.php">Jarak Solusi Ideal &raquo;</a>
-        </div>
-    </div>
-</div>
-
-<?php
-include './includes/footer.php';
-?>
