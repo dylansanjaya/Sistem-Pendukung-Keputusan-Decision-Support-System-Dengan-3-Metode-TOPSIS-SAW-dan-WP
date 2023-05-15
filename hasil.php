@@ -6,8 +6,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-if(!isset($_SESSION['ranking'])) {
-    header('Location: ranking.php');
+if(!isset($_SESSION['normalisasi-w'])) {
+    header('Location: normalisasi-w.php');
     exit;
 } else {
     $req = $dbc->prepare("SELECT * FROM pemilihan WHERE id = ?");
@@ -105,7 +105,7 @@ include './includes/header.php';
     <br/>
         <div class="row">
             <div class="text-right">
-                <a class="btn btn-primary" href="nilai-alternatif.php">Laporan;</a>
+                <a class="btn btn-primary" href="nilai-alternatif.php">Laporan</a>
             </div>
     </br/>
 </div>

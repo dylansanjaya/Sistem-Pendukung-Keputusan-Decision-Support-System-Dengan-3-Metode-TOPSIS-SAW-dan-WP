@@ -57,7 +57,7 @@ try {
     $dbc->commit();
 
     $_SESSION['ranking'] = true;
-    header('Location: hasil.php');
+    header('Location: normalisasi-w.php');
     exit;
 } catch (PDOException $e) {
     $dbc->rollback();
