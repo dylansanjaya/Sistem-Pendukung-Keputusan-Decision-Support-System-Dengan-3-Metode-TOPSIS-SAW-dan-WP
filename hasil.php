@@ -102,6 +102,12 @@ include './includes/header.php';
         }
         ?>
     </table>
+    <br/>
+        <div class="row">
+            <div class="text-right">
+                <a class="btn btn-primary" href="nilai-alternatif.php">Laporan;</a>
+            </div>
+    </br/>
 </div>
 <?php
 include './includes/footer.php';

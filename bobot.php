@@ -198,7 +198,7 @@ include './includes/header.php';
                 <a class="btn btn-primary" href="nilai-alternatif.php">&laquo; Nilai</a>
             </div>
             <div class="text-right">
-                <button type="submit" class="btn btn-primary">Matrik R &raquo;</button>
+                <button type="submit" class="btn btn-primary">Hasil &raquo;</button>
             </div>
         </div>
     </br/>
