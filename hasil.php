@@ -105,7 +105,7 @@ include './includes/header.php';
     <br/>
         <div class="row">
             <div class="text-right">
-                <a class="btn btn-primary" href="nilai-alternatif.php">Laporan</a>
+                <a class="btn btn-primary" href="laporan.php">Laporan</a>
             </div>
     </br/>
 </div>

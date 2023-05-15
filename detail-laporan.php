@@ -35,6 +35,12 @@ $req->execute();
 
 $bobot = $req->fetch();
 
+$req = $dbc->prepare("SELECT * FROM bobot_normal WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
+
+$bobot_normal = $req->fetch();
+
 $req = $dbc->prepare("SELECT * FROM matrik_r WHERE id_pemilihan = ?");
 $req->bindParam(1, $_GET['id']);
 $req->execute();
@@ -73,7 +79,8 @@ include './includes/header.php';
     <div class="page-header text-center">
         <h1>Pemilihan Karyawan</h1>
         <h4><?php echo $pemilihan['keterangan']; ?></h4>
-    </div>
+    <br>
+
     <h3>Tabel Nilai Alternatif</h3>
     <table class="table table-bordered">
         <tr>
@@ -101,7 +108,6 @@ include './includes/header.php';
         }
         ?>
     </table>
-    <hr />
     <h3>Tabel Bobot</h3>
     <table class="table table-bordered">
         <tr>
@@ -123,160 +129,203 @@ include './includes/header.php';
             </tr>';
         ?>
     </table>
-    <hr />
-    <h3>Normalisasi Matriks R</h3>
+    <h3>Tabel Bobot Normal</h3>
     <table class="table table-bordered">
         <tr>
-            <td class="col-md-1">No</td>
-            <th class="col-md-3">Alternatif</th>
-            <th class="col-md-1">C1</th>
-            <th class="col-md-1">C2</th>
-            <th class="col-md-1">C3</th>
-            <th class="col-md-1">C4</th>
-            <th class="col-md-1">C5</th>
-            <th class="col-md-1">C6</th>
+            <th class="col-md-2">C1</th>
+            <th class="col-md-2">C2</th>
+            <th class="col-md-2">C3</th>
+            <th class="col-md-2">C4</th>
+            <th class="col-md-2">C5</th>
+            <th class="col-md-2">C6</th>
         </tr>
         <?php
+        echo '<tr>
+                <td class="col-md-1">'.$bobot_normal['c1'].'</td>
+                <td class="col-md-1">'.$bobot_normal['c2'].'</td>
+                <td class="col-md-1">'.$bobot_normal['c3'].'</td>
+                <td class="col-md-1">'.$bobot_normal['c4'].'</td>
+                <td class="col-md-1">'.$bobot_normal['c5'].'</td>
+                <td class="col-md-1">'.$bobot_normal['c6'].'</td>
+            </tr>';
+        ?>
+    </table>
+    <br>
+    </hr> 
+    </div>
+
+    <div>
+        <div>
+            <h1>TOPSIS</h1>
+        </div>
+        <h3>Normalisasi Matriks R</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">C1</th>
+                <th class="col-md-1">C2</th>
+                <th class="col-md-1">C3</th>
+                <th class="col-md-1">C4</th>
+                <th class="col-md-1">C5</th>
+                <th class="col-md-1">C6</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$r[$i]['c1'].'</td>
+                        <td class="col-md-1">'.$r[$i]['c2'].'</td>
+                        <td class="col-md-1">'.$r[$i]['c3'].'</td>
+                        <td class="col-md-1">'.$r[$i]['c4'].'</td>
+                        <td class="col-md-1">'.$r[$i]['c5'].'</td>
+                        <td class="col-md-1">'.$r[$i]['c6'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <h3>Normalisasi Matriks Y</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">C1</th>
+                <th class="col-md-1">C2</th>
+                <th class="col-md-1">C3</th>
+                <th class="col-md-1">C4</th>
+                <th class="col-md-1">C5</th>
+                <th class="col-md-1">C6</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$y[$i]['c1'].'</td>
+                        <td class="col-md-1">'.$y[$i]['c2'].'</td>
+                        <td class="col-md-1">'.$y[$i]['c3'].'</td>
+                        <td class="col-md-1">'.$y[$i]['c4'].'</td>
+                        <td class="col-md-1">'.$y[$i]['c5'].'</td>
+                        <td class="col-md-1">'.$y[$i]['c6'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <h3>Nilai Ideal</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-md-3">Y</th>
+                <th class="col-md-1">C1</th>
+                <th class="col-md-1">C2</th>
+                <th class="col-md-1">C3</th>
+                <th class="col-md-1">C4</th>
+                <th class="col-md-1">C5</th>
+                <th class="col-md-1">C6</th>
+            </tr>
+            <?php
+
+            foreach ($a as $ideal => $y) {
+                echo '<tr>
+                        <td class="col-md-2">'.ucfirst($y['ideal']).'</td>
+                        <td class="col-md-1">'.$y['c1'].'</td>
+                        <td class="col-md-1">'.$y['c2'].'</td>
+                        <td class="col-md-1">'.$y['c3'].'</td>
+                        <td class="col-md-1">'.$y['c4'].'</td>
+                        <td class="col-md-1">'.$y['c5'].'</td>
+                        <td class="col-md-1">'.$y['c6'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <h3>Jarak Solusi Ideal</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-md-1">No</th>
+                <th class="col-md-5">Alternatif</th>
+                <th class="col-md-3">Positif</th>
+                <th class="col-md-3">Negatif</th>
+            </tr>
+            <?php
+
+            for ($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-5">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-3">'.$d[$i]['positif'].'</td>
+                        <td class="col-md-3">'.$d[$i]['negatif'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <h3>Tabel Perankingan</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">V</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-10">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$v[$i]['v'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <?php
+        $hasil = array();
+
         for($i = 0; $i < count($alternatif); $i++) {
-            echo '<tr>
-                    <td class="col-md-1">'.($i+1).'</td>
-                    <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
-                    <td class="col-md-1">'.$r[$i]['c1'].'</td>
-                    <td class="col-md-1">'.$r[$i]['c2'].'</td>
-                    <td class="col-md-1">'.$r[$i]['c3'].'</td>
-                    <td class="col-md-1">'.$r[$i]['c4'].'</td>
-                    <td class="col-md-1">'.$r[$i]['c5'].'</td>
-                    <td class="col-md-1">'.$r[$i]['c6'].'</td>
-                </tr>';
+            $hasil[] = array(
+                "alternatif" => $alternatif[$i]['alternatif'],
+                "v" => $v[$i]['v']
+            );
         }
-        ?>
-    </table>
-    <hr />
-    <h3>Normalisasi Matriks Y</h3>
-    <table class="table table-bordered">
-        <tr>
-            <td class="col-md-1">No</td>
-            <th class="col-md-3">Alternatif</th>
-            <th class="col-md-1">C1</th>
-            <th class="col-md-1">C2</th>
-            <th class="col-md-1">C3</th>
-            <th class="col-md-1">C4</th>
-            <th class="col-md-1">C5</th>
-            <th class="col-md-1">C6</th>
-        </tr>
-        <?php
-        for($i = 0; $i < count($alternatif); $i++) {
-            echo '<tr>
-                    <td class="col-md-1">'.($i+1).'</td>
-                    <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
-                    <td class="col-md-1">'.$y[$i]['c1'].'</td>
-                    <td class="col-md-1">'.$y[$i]['c2'].'</td>
-                    <td class="col-md-1">'.$y[$i]['c3'].'</td>
-                    <td class="col-md-1">'.$y[$i]['c4'].'</td>
-                    <td class="col-md-1">'.$y[$i]['c5'].'</td>
-                    <td class="col-md-1">'.$y[$i]['c6'].'</td>
-                </tr>';
-        }
-        ?>
-    </table>
-    <hr />
-    <h3>Nilai Ideal</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-3">Y</th>
-            <th class="col-md-1">C1</th>
-            <th class="col-md-1">C2</th>
-            <th class="col-md-1">C3</th>
-            <th class="col-md-1">C4</th>
-            <th class="col-md-1">C5</th>
-            <th class="col-md-1">C6</th>
-        </tr>
-        <?php
 
-        foreach ($a as $ideal => $y) {
-            echo '<tr>
-                    <td class="col-md-2">'.ucfirst($y['ideal']).'</td>
-                    <td class="col-md-1">'.$y['c1'].'</td>
-                    <td class="col-md-1">'.$y['c2'].'</td>
-                    <td class="col-md-1">'.$y['c3'].'</td>
-                    <td class="col-md-1">'.$y['c4'].'</td>
-                    <td class="col-md-1">'.$y['c5'].'</td>
-                    <td class="col-md-1">'.$y['c6'].'</td>
-                </tr>';
-        }
+        usort($hasil, function($a, $b) {
+            return $a['v'] < $b['v'];
+        });
         ?>
-    </table>
-    <hr />
-    <h3>Jarak Solusi Ideal</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-1">No</th>
-            <th class="col-md-5">Alternatif</th>
-            <th class="col-md-3">Positif</th>
-            <th class="col-md-3">Negatif</th>
-        </tr>
-        <?php
+        <h3>Tabel Hasil Akhir</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">V</th>
+                <td class="col-md-1">Rank</td>
+            </tr>
+            <?php
+            for($i = 0; $i < count($hasil); $i++) {
+                echo '<tr>
+                        <td class="col-md-3">'.$hasil[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$hasil[$i]['v'].'</td>
+                        <td class="col-md-1">'.($i+1).'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        </hr>
+    </div>
+    <br>
+    
 
-        for ($i = 0; $i < count($alternatif); $i++) {
-            echo '<tr>
-                    <td class="col-md-1">'.($i+1).'</td>
-                    <td class="col-md-5">'.$alternatif[$i]['alternatif'].'</td>
-                    <td class="col-md-3">'.$d[$i]['positif'].'</td>
-                    <td class="col-md-3">'.$d[$i]['negatif'].'</td>
-                </tr>';
-        }
-        ?>
-    </table>
-    <hr />
-    <h3>Tabel Perankingan</h3>
-    <table class="table table-bordered">
-        <tr>
-            <td class="col-md-1">No</td>
-            <th class="col-md-3">Alternatif</th>
-            <th class="col-md-1">V</th>
-        </tr>
-        <?php
-        for($i = 0; $i < count($alternatif); $i++) {
-            echo '<tr>
-                    <td class="col-md-1">'.($i+1).'</td>
-                    <td class="col-md-10">'.$alternatif[$i]['alternatif'].'</td>
-                    <td class="col-md-1">'.$v[$i]['v'].'</td>
-                </tr>';
-        }
-        ?>
-    </table>
-    <hr />
-    <?php
-    $hasil = array();
+    <!-- bagian saw -->
+    <div>
+        <div>
+            <h1>SAW</h1>
+        </div>
+    </div>
+    <br>
 
-    for($i = 0; $i < count($alternatif); $i++) {
-        $hasil[] = array(
-            "alternatif" => $alternatif[$i]['alternatif'],
-            "v" => $v[$i]['v']
-        );
-    }
+    <!-- bagian wp -->
+    <div>
+        <div>
+            <h1>WP</h1>
+        </div>
+    </div>
 
-    usort($hasil, function($a, $b) {
-        return $a['v'] < $b['v'];
-    });
-    ?>
-    <h3>Tabel Hasil Akhir</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-3">Alternatif</th>
-            <th class="col-md-1">V</th>
-            <td class="col-md-1">Rank</td>
-        </tr>
-        <?php
-        for($i = 0; $i < count($hasil); $i++) {
-            echo '<tr>
-                    <td class="col-md-3">'.$hasil[$i]['alternatif'].'</td>
-                    <td class="col-md-1">'.$hasil[$i]['v'].'</td>
-                    <td class="col-md-1">'.($i+1).'</td>
-                </tr>';
-        }
-        ?>
-    </table>
 </div>
 <?php
 include './includes/footer.php';
