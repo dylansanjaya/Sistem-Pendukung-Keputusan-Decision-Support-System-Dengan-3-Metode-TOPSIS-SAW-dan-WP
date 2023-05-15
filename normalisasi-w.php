@@ -77,7 +77,7 @@ try {
     $dbc->commit();
 
     $_SESSION['normalisasi-w'] = true;
-    header('Location: hasil.php');
+    header('Location: matrik-r-saw.php');
     exit;
 } catch (PDOException $e) {
     $dbc->rollback();

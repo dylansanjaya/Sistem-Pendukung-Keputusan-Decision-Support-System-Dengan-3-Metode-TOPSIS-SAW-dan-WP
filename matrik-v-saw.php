@@ -80,7 +80,7 @@ try {
     $dbc->commit();
 
     $_SESSION['matrik-v-saw'] = true;
-    header('Location: vektor-s-wp.php');
+    header('Location: ranking-saw.php');
     exit;
 } catch (PDOException $e) {
     $dbc->rollback();

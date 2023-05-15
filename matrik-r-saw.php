@@ -66,15 +66,15 @@ for ($i = 0; $i < count($alternatif); $i++) {
 // }
 
 for ($i = 0; $i < count($alternatif); $i++) {
-    $r[0][] = round($nilaiAlternatif[$i]['c1'] / max(array_column($nilaiAlternatif, 'c1')), 4);
-    $r[1][] = round($nilaiAlternatif[$i]['c2'] / max(array_column($nilaiAlternatif, 'c2')), 4);
-    $r[2][] = round($nilaiAlternatif[$i]['c3'] / max(array_column($nilaiAlternatif, 'c3')), 4);
-    $r[3][] = round(min(array_column($nilaiAlternatif, 'c4')) / $nilaiAlternatif[$i]['c4'], 4);
-    $r[4][] = round(min(array_column($nilaiAlternatif, 'c5')) / $nilaiAlternatif[$i]['c5'], 4);
-    $r[5][] = round(min(array_column($nilaiAlternatif, 'c6')) / $nilaiAlternatif[$i]['c6'], 4);
+    $rs[0][] = round($nilaiAlternatif[$i]['c1'] / max(array_column($nilaiAlternatif, 'c1')), 4);
+    $rs[1][] = round($nilaiAlternatif[$i]['c2'] / max(array_column($nilaiAlternatif, 'c2')), 4);
+    $rs[2][] = round($nilaiAlternatif[$i]['c3'] / max(array_column($nilaiAlternatif, 'c3')), 4);
+    $rs[3][] = round(min(array_column($nilaiAlternatif, 'c4')) / $nilaiAlternatif[$i]['c4'], 4);
+    $rs[4][] = round(min(array_column($nilaiAlternatif, 'c5')) / $nilaiAlternatif[$i]['c5'], 4);
+    $rs[5][] = round(min(array_column($nilaiAlternatif, 'c6')) / $nilaiAlternatif[$i]['c6'], 4);
 }
 
-$status = "matrik-r-saw"
+$status = "matrik-r-saw";
 try {
     $dbc->beginTransaction();
 

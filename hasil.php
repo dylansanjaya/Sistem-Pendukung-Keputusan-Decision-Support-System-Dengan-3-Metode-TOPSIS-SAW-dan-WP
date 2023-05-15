@@ -6,8 +6,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-if(!isset($_SESSION['normalisasi-w'])) {
-    header('Location: normalisasi-w.php');
+if(!isset($_SESSION['ranking-saw'])) {
+    header('Location: ranking-saw.php');
     exit;
 } else {
     $req = $dbc->prepare("SELECT * FROM pemilihan WHERE id = ?");
@@ -22,26 +22,27 @@ if(!isset($_SESSION['normalisasi-w'])) {
 
     $alternatif = $req->fetchAll();
 
+    //TOPSIS
     $req = $dbc->prepare("SELECT * FROM ranking WHERE id_pemilihan = ?");
     $req->bindParam(1, $_SESSION['id']);
     $req->execute();
 
     $v = $req->fetchAll();
 
-    $hasil = array();
+    $hasiltopsis = array();
 
     for($i = 0; $i < count($alternatif); $i++) {
-        $hasil[] = array(
+        $hasiltopsis[] = array(
             "alternatif" => $alternatif[$i]['alternatif'],
             "v" => $v[$i]['v']
         );
     }
 
-    usort($hasil, function($a, $b) {
+    usort($hasiltopsis, function($a, $b) {
         return $a['v'] < $b['v'];
     });
 
-    $status = "selesai";
+    $status = "selesaitopsis";
     try {
         $dbc->beginTransaction();
 
@@ -49,8 +50,8 @@ if(!isset($_SESSION['normalisasi-w'])) {
 
         $req = $dbc->prepare("INSERT INTO hasil VALUES(:id, :alternatif, :v)");
         $req->bindValue(':id', $_SESSION['id']);
-        $req->bindValue(':alternatif', $hasil[0]['alternatif']);
-        $req->bindValue(':v', $hasil[0]['v']);
+        $req->bindValue(':alternatif', $hasiltopsis[0]['alternatif']);
+        $req->bindValue(':v', $hasiltopsis[0]['v']);
         $req->execute();
 
         $req = $dbc->prepare("UPDATE pemilihan SET status = ? WHERE id = ?");
@@ -63,6 +64,49 @@ if(!isset($_SESSION['normalisasi-w'])) {
         $dbc->rollback();
     }
 
+    // SAW
+    $req = $dbc->prepare("SELECT * FROM ranking_saw WHERE id_pemilihan = ?");
+    $req->bindParam(1, $_SESSION['id']);
+    $req->execute();
+
+    $vs = $req->fetchAll();
+
+    $hasilsaw = array();
+
+    for($i = 0; $i < count($alternatif); $i++) {
+        $hasilsaw[] = array(
+            "alternatif" => $alternatif[$i]['alternatif'],
+            "vs" => $vs[$i]['vs']
+        );
+    }
+
+    usort($hasilsaw, function($a, $b) {
+        return $a['vs'] < $b['vs'];
+    });
+
+    $status = "selesaisaw";
+    try {
+        $dbc->beginTransaction();
+
+        $dbc->exec("DELETE FROM hasil_saw WHERE id_pemilihan = $_SESSION[id]");
+        
+        $req = $dbc->prepare("INSERT INTO hasil VALUES(:id, :alternatif, :vs)");
+        $req->bindValue(':id', $_SESSION['id']);
+        $req->bindValue(':alternatif', $hasilsaw[0]['alternatif']);
+        $req->bindValue(':vs', $hasilsaw[0]['vs']);
+        $req->execute();
+
+        $req = $dbc->prepare("UPDATE pemilihan SET status = ? WHERE id = ?");
+        $req->bindParam(1, $status);
+        $req->bindParam(2, $_SESSION['id']);
+        $req->execute();
+
+        $dbc->commit();
+    } catch (PDOException $e) {
+        $dbc->rollback();
+    }
+
+    //Topsis
     unset($_SESSION['id']);
     unset($_SESSION['alternatif']);
     unset($_SESSION['nilai-alternatif']);
@@ -72,8 +116,14 @@ if(!isset($_SESSION['normalisasi-w'])) {
     unset($_SESSION['nilai-ideal']);
     unset($_SESSION['jarak-solusi-ideal']);
     unset($_SESSION['ranking']);
+
+    //SAW
+    unset($_SESSION['normalisasi-w']);
+    unset($_SESSION['matrik-r-saw']);
+    unset($_SESSION['matrik-v-saw']);
+    unset($_SESSION['ranking-saw']);
 }
-$page_title = 'Hasil';
+$page_title = 'Hasil';  
 
 include './includes/header.php';
 ?>
@@ -82,10 +132,13 @@ include './includes/header.php';
         <h1>Pemilihan Karyawan</h1>
         <h4><?php echo $pemilihan['keterangan']; ?></h4>
     </div>
-    <h3>Hasil</h3>
+   
+    <!-- TOPSIS -->
+    <h3>Hasil TOPSIS</h3>
     <div class="well well-lg text-center">
-        <strong><?php echo $hasil[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
+        <strong><?php echo $hasiltopsis[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
     </div>
+   
     <table class="table table-bordered">
         <tr>
             <th class="col-md-4">Alternatif</th>
@@ -93,21 +146,46 @@ include './includes/header.php';
             <th class="col-md-1">Rank</th>
         </tr>
         <?php
-        for($i = 0; $i < count($hasil); $i++) {
+        for($i = 0; $i < count($hasiltopsis); $i++) {
             echo '<tr>
-                    <td class="col-md-4">'.$hasil[$i]['alternatif'].'</td>
-                    <td class="col-md-2">'.$hasil[$i]['v'].'</td>
+                    <td class="col-md-4">'.$hasiltopsis[$i]['alternatif'].'</td>
+                    <td class="col-md-2">'.$hasiltopsis[$i]['v'].'</td>
                     <td class="col-md-2">'.($i+1).'</td>
                 </tr>';
         }
         ?>
     </table>
-    <br/>
+    
+    <!-- SAW -->
+    <h3>Hasil SAW</h3>
+    <div class="well well-lg text-center">
+        <strong><?php echo $hasilsaw[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
+    </div>
+   
+    <table class="table table-bordered">
+        <tr>
+            <th class="col-md-4">Alternatif</th>
+            <th class="col-md-2">V</th>
+            <th class="col-md-1">Rank</th>
+        </tr>
+        <?php
+        for($i = 0; $i < count($hasilsaw); $i++) {
+            echo '<tr>
+                    <td class="col-md-4">'.$hasilsaw[$i]['alternatif'].'</td>
+                    <td class="col-md-2">'.$hasilsaw[$i]['vs'].'</td>
+                    <td class="col-md-2">'.($i+1).'</td>
+                </tr>';
+        }
+        ?>
+    </table>  
+
+    <!-- tombol laporan -->
+    <br>
         <div class="row">
             <div class="text-right">
                 <a class="btn btn-primary" href="laporan.php">Laporan</a>
             </div>
-    </br/>
+    <br>
 </div>
 <?php
 include './includes/footer.php';

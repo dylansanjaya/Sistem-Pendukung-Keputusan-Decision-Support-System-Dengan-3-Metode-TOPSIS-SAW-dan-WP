@@ -71,6 +71,28 @@ $req->execute();
 
 $v = $req->fetchAll();
 
+//SAW
+$req = $dbc->prepare("SELECT * FROM matrik_r_saw WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
+
+$rs = $req->fetchAll();
+
+$req = $dbc->prepare("SELECT * FROM matrik_v_saw WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
+
+$ys = $req->fetchAll();
+
+$req = $dbc->prepare("SELECT * FROM ranking_saw WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
+
+$vs = $req->fetchAll();
+
+//WP
+
+
 $page_title = 'Detail Laporan';
 
 include './includes/header.php';
@@ -276,16 +298,16 @@ include './includes/header.php';
             ?>
         </table>
         <?php
-        $hasil = array();
+        $hasiltopsis = array();
 
         for($i = 0; $i < count($alternatif); $i++) {
-            $hasil[] = array(
+            $hasiltopsis[] = array(
                 "alternatif" => $alternatif[$i]['alternatif'],
                 "v" => $v[$i]['v']
             );
         }
 
-        usort($hasil, function($a, $b) {
+        usort($hasiltopsis, function($a, $b) {
             return $a['v'] < $b['v'];
         });
         ?>
@@ -297,10 +319,10 @@ include './includes/header.php';
                 <td class="col-md-1">Rank</td>
             </tr>
             <?php
-            for($i = 0; $i < count($hasil); $i++) {
+            for($i = 0; $i < count($hasiltopsis); $i++) {
                 echo '<tr>
-                        <td class="col-md-3">'.$hasil[$i]['alternatif'].'</td>
-                        <td class="col-md-1">'.$hasil[$i]['v'].'</td>
+                        <td class="col-md-3">'.$hasiltopsis[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$hasiltopsis[$i]['v'].'</td>
                         <td class="col-md-1">'.($i+1).'</td>
                     </tr>';
             }
@@ -316,6 +338,111 @@ include './includes/header.php';
         <div>
             <h1>SAW</h1>
         </div>
+        <h3>Normalisasi Matriks R</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">C1</th>
+                <th class="col-md-1">C2</th>
+                <th class="col-md-1">C3</th>
+                <th class="col-md-1">C4</th>
+                <th class="col-md-1">C5</th>
+                <th class="col-md-1">C6</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$rs[$i]['c1'].'</td>
+                        <td class="col-md-1">'.$rs[$i]['c2'].'</td>
+                        <td class="col-md-1">'.$rs[$i]['c3'].'</td>
+                        <td class="col-md-1">'.$rs[$i]['c4'].'</td>
+                        <td class="col-md-1">'.$rs[$i]['c5'].'</td>
+                        <td class="col-md-1">'.$rs[$i]['c6'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        
+        <h3>Normalisasi Matriks V</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">C1</th>
+                <th class="col-md-1">C2</th>
+                <th class="col-md-1">C3</th>
+                <th class="col-md-1">C4</th>
+                <th class="col-md-1">C5</th>
+                <th class="col-md-1">C6</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$ys[$i]['c1'].'</td>
+                        <td class="col-md-1">'.$ys[$i]['c2'].'</td>
+                        <td class="col-md-1">'.$ys[$i]['c3'].'</td>
+                        <td class="col-md-1">'.$ys[$i]['c4'].'</td>
+                        <td class="col-md-1">'.$ys[$i]['c5'].'</td>
+                        <td class="col-md-1">'.$ys[$i]['c6'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        
+        <h3>Tabel Perankingan</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">V</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-10">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$vs[$i]['vs'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <?php
+        $hasilsaw = array();
+
+        for($i = 0; $i < count($alternatif); $i++) {
+            $hasilsaw[] = array(
+                "alternatif" => $alternatif[$i]['alternatif'],
+                "vs" => $vs[$i]['vs']
+            );
+        }
+
+        usort($hasilsaw, function($a, $b) {
+            return $a['vs'] < $b['vs'];
+        });
+        ?>
+        <h3>Tabel Hasil Akhir</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">V</th>
+                <td class="col-md-1">Rank</td>
+            </tr>
+            <?php
+            for($i = 0; $i < count($hasilsaw); $i++) {
+                echo '<tr>
+                        <td class="col-md-3">'.$hasilsaw[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$hasilsaw[$i]['vs'].'</td>
+                        <td class="col-md-1">'.($i+1).'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        </hr>
     </div>
     <br>
 
