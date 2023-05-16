@@ -133,7 +133,7 @@ $page_title = 'Nilai Alternatif';
 include './includes/header.php';
 ?>
 
-<div class="page-header text-center">
+<div class="page-header text-center" style="margin-bottom: -5px;">
         <h1>Pemilihan Karyawan</h1>
         <h4><?php echo $pemilihan['keterangan']; ?></h4>
 </div>
@@ -143,8 +143,11 @@ include './includes/criteriatable.php';
 ?>
 <br>
 
-    <h3>Nilai Alternatif</h3>
-    <form method="post">
+<section class="table__header">
+    <h3 class="text-center">Nilai Alternatif</h3>
+</section>
+<section class="table__body">
+<form method="post">
         <?php
         if (isset($_SESSION['errNilaiAlternatif']) && $_SESSION['errNilaiAlternatif']) {
             echo '<div class="alert alert-warning alert-dismissible" role="alert">
@@ -153,75 +156,92 @@ include './includes/criteriatable.php';
                 </div>';
         }
         ?>
-        <table class="table table-bordered">
-            <tr>
-                <th class="col-md-1">No</th>
-                <th class="col-md-3">Alternatif</th>
-                <th class="col-md-1">C1</th>
-                <th class="col-md-1">C2</th>
-                <th class="col-md-1">C3</th>
-                <th class="col-md-1">C4</th>
-                <th class="col-md-1">C5</th>
-                <th class="col-md-1">C6</th>
-            </tr>
-            <?php
-            if (isset($_SESSION['errNilaiAlternatif']) && $_SESSION['errNilaiAlternatif']) {
-                for($i = 0; $i < count($alternatif); $i++) {
-                    echo '<tr>
-                            <td class="col-md-1">'.($i+1).'</td>
-                            <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>';
-
-                    if (in_array($i, $_SESSION['errC'][0])) {
-                        echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[0][]" value="'.$_SESSION['c'][0][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-1"><input class="form-control" type="text" name="c[0][]" value="'.$_SESSION['c'][0][$i].'"/></td>';
-                    }
-
-                    if (in_array($i, $_SESSION['errC'][1])) {
-                        echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[1][]" value="'.$_SESSION['c'][1][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-1"><input class="form-control" type="text" name="c[1][]" value="'.$_SESSION['c'][1][$i].'"/></td>';
-                    }
-
-                    if (in_array($i, $_SESSION['errC'][2])) {
-                        echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[2][]" value="'.$_SESSION['c'][2][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-1"><input class="form-control" type="text" name="c[2][]" value="'.$_SESSION['c'][2][$i].'"/></td>';
-                    }
-
-                    if (in_array($i, $_SESSION['errC'][3])) {
-                        echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[3][]" value="'.$_SESSION['c'][3][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-1"><input class="form-control" type="text" name="c[3][]" value="'.$_SESSION['c'][3][$i].'"/></td>';
-                    }
-
-                    if (in_array($i, $_SESSION['errC'][4])) {
-                        echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[4][]" value="'.$_SESSION['c'][4][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-1"><input class="form-control" type="text" name="c[4][]" value="'.$_SESSION['c'][4][$i].'"/></td>';
-                    }
-
-                    if (in_array($i, $_SESSION['errC'][5])) {
-                        echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[5][]" value="'.$_SESSION['c'][5][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-1"><input class="form-control" type="text" name="c[5][]" value="'.$_SESSION['c'][5][$i].'"/></td>';
-                    }
-                    echo '</tr>';
-                }
-            } else if (isset($nilai) && $nilai ) {
-                for($i = 0; $i < count($alternatif); $i++) {
-                    if (isset($nilai[$i])) {
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-md-1">No</th>
+                    <th class="col-md-3">Alternatif</th>
+                    <th class="col-md-1">C1</th>
+                    <th class="col-md-1">C2</th>
+                    <th class="col-md-1">C3</th>
+                    <th class="col-md-1">C4</th>
+                    <th class="col-md-1">C5</th>
+                    <th class="col-md-1">C6</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (isset($_SESSION['errNilaiAlternatif']) && $_SESSION['errNilaiAlternatif']) {
+                    for($i = 0; $i < count($alternatif); $i++) {
                         echo '<tr>
                                 <td class="col-md-1">'.($i+1).'</td>
-                                <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
-                                <td class="col-md-1"><input class="form-control" type="text" name="c[0][]" placeholder="6 - 60" value="'.$nilai[$i]['c1'].'"/></td>
-                                <td class="col-md-1"><input class="form-control" type="text" name="c[1][]" placeholder="6 - 60" value="'.$nilai[$i]['c2'].'"/></td>
-                                <td class="col-md-1"><input class="form-control" type="text" name="c[2][]" placeholder="1 - n" value="'.$nilai[$i]['c3'].'"/></td>
-                                <td class="col-md-1"><input class="form-control" type="text" name="c[3][]" placeholder="3 - 15" value="'.$nilai[$i]['c4'].'"/></td>
-                                <td class="col-md-1"><input class="form-control" type="text" name="c[4][]" placeholder="1 - 30" value="'.$nilai[$i]['c5'].'"/></td>
-                                <td class="col-md-1"><input class="form-control" type="text" name="c[5][]" placeholder="20 - 40" value="'.$nilai[$i]['c6'].'"/></td>
-                            </tr>';
-                    } else {
+                                <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>';
+
+                        if (in_array($i, $_SESSION['errC'][0])) {
+                            echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[0][]" value="'.$_SESSION['c'][0][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-1"><input class="form-control" type="text" name="c[0][]" value="'.$_SESSION['c'][0][$i].'"/></td>';
+                        }
+
+                        if (in_array($i, $_SESSION['errC'][1])) {
+                            echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[1][]" value="'.$_SESSION['c'][1][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-1"><input class="form-control" type="text" name="c[1][]" value="'.$_SESSION['c'][1][$i].'"/></td>';
+                        }
+
+                        if (in_array($i, $_SESSION['errC'][2])) {
+                            echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[2][]" value="'.$_SESSION['c'][2][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-1"><input class="form-control" type="text" name="c[2][]" value="'.$_SESSION['c'][2][$i].'"/></td>';
+                        }
+
+                        if (in_array($i, $_SESSION['errC'][3])) {
+                            echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[3][]" value="'.$_SESSION['c'][3][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-1"><input class="form-control" type="text" name="c[3][]" value="'.$_SESSION['c'][3][$i].'"/></td>';
+                        }
+
+                        if (in_array($i, $_SESSION['errC'][4])) {
+                            echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[4][]" value="'.$_SESSION['c'][4][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-1"><input class="form-control" type="text" name="c[4][]" value="'.$_SESSION['c'][4][$i].'"/></td>';
+                        }
+
+                        if (in_array($i, $_SESSION['errC'][5])) {
+                            echo '<td class="col-md-1 has-error"><input class="form-control" type="text" name="c[5][]" value="'.$_SESSION['c'][5][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-1"><input class="form-control" type="text" name="c[5][]" value="'.$_SESSION['c'][5][$i].'"/></td>';
+                        }
+                        echo '</tr>';
+                    }
+                } else if (isset($nilai) && $nilai ) {
+                    for($i = 0; $i < count($alternatif); $i++) {
+                        if (isset($nilai[$i])) {
+                            echo '<tr>
+                                    <td class="col-md-1">'.($i+1).'</td>
+                                    <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[0][]" placeholder="6 - 60" value="'.$nilai[$i]['c1'].'"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[1][]" placeholder="6 - 60" value="'.$nilai[$i]['c2'].'"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[2][]" placeholder="1 - n" value="'.$nilai[$i]['c3'].'"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[3][]" placeholder="3 - 15" value="'.$nilai[$i]['c4'].'"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[4][]" placeholder="1 - 30" value="'.$nilai[$i]['c5'].'"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[5][]" placeholder="20 - 40" value="'.$nilai[$i]['c6'].'"/></td>
+                                </tr>';
+                        } else {
+                            echo '<tr>
+                                    <td class="col-md-1">'.($i+1).'</td>
+                                    <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[0][]" placeholder="6 - 60"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[1][]" placeholder="6 - 60"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[2][]" placeholder="1 - n"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[3][]" placeholder="3 - 15"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[4][]" placeholder="1 - 30"/></td>
+                                    <td class="col-md-1"><input class="form-control" type="text" name="c[5][]" placeholder="20 - 40"/></td>
+                                </tr>';
+                        }
+                    }
+                } else {
+                    for($i = 0; $i < count($alternatif); $i++) {
                         echo '<tr>
                                 <td class="col-md-1">'.($i+1).'</td>
                                 <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
@@ -234,34 +254,21 @@ include './includes/criteriatable.php';
                             </tr>';
                     }
                 }
-            } else {
-                for($i = 0; $i < count($alternatif); $i++) {
-                    echo '<tr>
-                            <td class="col-md-1">'.($i+1).'</td>
-                            <td class="col-md-3">'.$alternatif[$i]['alternatif'].'</td>
-                            <td class="col-md-1"><input class="form-control" type="text" name="c[0][]" placeholder="6 - 60"/></td>
-                            <td class="col-md-1"><input class="form-control" type="text" name="c[1][]" placeholder="6 - 60"/></td>
-                            <td class="col-md-1"><input class="form-control" type="text" name="c[2][]" placeholder="1 - n"/></td>
-                            <td class="col-md-1"><input class="form-control" type="text" name="c[3][]" placeholder="3 - 15"/></td>
-                            <td class="col-md-1"><input class="form-control" type="text" name="c[4][]" placeholder="1 - 30"/></td>
-                            <td class="col-md-1"><input class="form-control" type="text" name="c[5][]" placeholder="20 - 40"/></td>
-                        </tr>';
-                }
-            }
-            ?>
+                ?>
+            </tbody>
         </table>
         <br/>
-        <div class="row">
+</section>
+        <div class="row" style="margin-top: 15px">
             <div class="col-md-6 text-left">
                 <a class="btn btn-primary" href="alternatif.php">&laquo; Alternatif</a>
             </div>
-            <div class="text-right">
+            <div class="text-right" style="margin-right: 14px">
                 <button type="submit" class="btn btn-primary">Bobot &raquo;</button>
             </div>
         </div>
     </br/>
-    </form>
-</div>
+</form>
 
 <?php
 include './includes/footer.php';

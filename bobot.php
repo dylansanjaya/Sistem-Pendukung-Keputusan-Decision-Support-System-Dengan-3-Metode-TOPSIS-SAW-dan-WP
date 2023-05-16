@@ -96,9 +96,11 @@ include './includes/header.php';
 include './includes/criteriatable.php';
 ?>
 <br>
-
-    <h3>Nilai Alternatif</h3>
-    <form method="post">
+<section class="table__header">
+    <h3 class="text-center">Nilai Bobot</h3>
+</section>
+<section class="table__body">
+<form method="post">
         <?php
         if (isset($_SESSION['errBobot']) && $_SESSION['errBobot']) {
             echo '<div class="alert alert-warning alert-dismissible" role="alert">
@@ -107,7 +109,8 @@ include './includes/criteriatable.php';
                 </div>';
         }
         ?>
-        <table class="table table-bordered">
+        <table>
+            <thead>
             <tr>
                 <th class="col-md-2">C1</th>
                 <th class="col-md-2">C2</th>
@@ -116,53 +119,56 @@ include './includes/criteriatable.php';
                 <th class="col-md-2">C5</th>
                 <th class="col-md-2">C6</th>
             </tr>
-            <?php
-            if (isset($_SESSION['errBobot']) && $_SESSION['errBobot']) {
-                echo '<tr>';
+            </thead>
+            <tbody>
+                <?php
+                if (isset($_SESSION['errBobot']) && $_SESSION['errBobot']) {
+                    echo '<tr>';
 
-                for($i = 0; $i < count($_SESSION['bobot']); $i++) {
+                    for($i = 0; $i < count($_SESSION['bobot']); $i++) {
 
-                    if (in_array($i, $_SESSION['errBobotData'])) {
-                        echo '<td class="col-md-2 has-error"><input class="form-control" type="text" name="bobot[]" value="'.$_SESSION['bobot'][$i].'"/></td>';
-                    } else {
-                        echo '<td class="col-md-2"><input class="form-control" type="text" name="bobot[]" value="'.$_SESSION['bobot'][$i].'"/></td>';
+                        if (in_array($i, $_SESSION['errBobotData'])) {
+                            echo '<td class="col-md-2 has-error"><input class="form-control" type="text" name="bobot[]" value="'.$_SESSION['bobot'][$i].'"/></td>';
+                        } else {
+                            echo '<td class="col-md-2"><input class="form-control" type="text" name="bobot[]" value="'.$_SESSION['bobot'][$i].'"/></td>';
+                        }
                     }
-                }
 
-                echo '</tr>';
-            } else if (isset($bobot) && $bobot ) {
-                echo '<tr>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c1'].'"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c2'].'"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c3'].'"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c4'].'"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c5'].'"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c6'].'"/></td>
-                    </tr>';
-            } else {
-                echo '<tr>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
-                        <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
-                    </tr>';
-            }
-            ?>
+                    echo '</tr>';
+                } else if (isset($bobot) && $bobot ) {
+                    echo '<tr>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c1'].'"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c2'].'"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c3'].'"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c4'].'"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c5'].'"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100" value="'.$bobot[0]['c6'].'"/></td>
+                        </tr>';
+                } else {
+                    echo '<tr>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
+                            <td class="col-md-2"><input class="form-control" type="text" name="bobot[]" placeholder="1 - 100"/></td>
+                        </tr>';
+                }
+                ?>
+            </tbody>
         </table>
         <br/>
-        <div class="row">
+</section>
+        <div class="row" style="margin-top: 15px">
             <div class="col-md-6 text-left">
                 <a class="btn btn-primary" href="nilai-alternatif.php">&laquo; Nilai</a>
             </div>
-            <div class="text-right">
+            <div class="text-right" style="margin-right: 14px">
                 <button type="submit" class="btn btn-primary">Hasil &raquo;</button>
             </div>
         </div>
     </br/>
     </form>
-</div>
 
 <?php
 include './includes/footer.php';

@@ -185,78 +185,99 @@ include './includes/header.php';
     </div>
    
     <!-- TOPSIS -->
-    <h3>Hasil TOPSIS</h3>
-    <div class="well well-lg text-center">
-        <strong><?php echo $hasiltopsis[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
-    </div>
-   
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-4">Alternatif</th>
-            <th class="col-md-2">V</th>
-            <th class="col-md-1">Rank</th>
-        </tr>
-        <?php
-        for($i = 0; $i < count($hasiltopsis); $i++) {
-            echo '<tr>
-                    <td class="col-md-4">'.$hasiltopsis[$i]['alternatif'].'</td>
-                    <td class="col-md-2">'.$hasiltopsis[$i]['v'].'</td>
-                    <td class="col-md-2">'.($i+1).'</td>
-                </tr>';
-        }
-        ?>
-    </table>
-    
+    <section class="table__header">
+        <h3 class="text-center">Hasil TOPSIS</h3>
+        <div class="well well-lg text-center">
+            <strong><?php echo $hasiltopsis[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-md-4">Alternatif</th>
+                    <th class="col-md-2">V</th>
+                    <th class="col-md-1">Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                for($i = 0; $i < count($hasiltopsis); $i++) {
+                    echo '<tr>
+                            <td class="col-md-4">'.$hasiltopsis[$i]['alternatif'].'</td>
+                            <td class="col-md-2">'.$hasiltopsis[$i]['v'].'</td>
+                            <td class="col-md-2">'.($i+1).'</td>
+                        </tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </section>
+<br>
     <!-- SAW -->
-    <h3>Hasil SAW</h3>
-    <div class="well well-lg text-center">
-        <strong><?php echo $hasilsaw[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
-    </div>
-   
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-4">Alternatif</th>
-            <th class="col-md-2">V</th>
-            <th class="col-md-1">Rank</th>
-        </tr>
-        <?php
-        for($i = 0; $i < count($hasilsaw); $i++) {
-            echo '<tr>
-                    <td class="col-md-4">'.$hasilsaw[$i]['alternatif'].'</td>
-                    <td class="col-md-2">'.$hasilsaw[$i]['vs'].'</td>
-                    <td class="col-md-2">'.($i+1).'</td>
-                </tr>';
-        }
-        ?>
-    </table>  
-
+    <section class="table__header">
+        <h3 class="text-center">Hasil SAW</h3>
+        <div class="well well-lg text-center">
+            <strong><?php echo $hasilsaw[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-md-4">Alternatif</th>
+                    <th class="col-md-2">V</th>
+                    <th class="col-md-1">Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                for($i = 0; $i < count($hasilsaw); $i++) {
+                    echo '<tr>
+                            <td class="col-md-4">'.$hasilsaw[$i]['alternatif'].'</td>
+                            <td class="col-md-2">'.$hasilsaw[$i]['vs'].'</td>
+                            <td class="col-md-2">'.($i+1).'</td>
+                        </tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </section>
+<br>
     <!-- WP -->
-    <h3>Hasil WP</h3>
-    <div class="well well-lg text-center">
-        <strong><?php echo $hasilwp[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
-    </div>
-   
-    <table class="table table-bordered">
-        <tr>
-            <th class="col-md-4">Alternatif</th>
-            <th class="col-md-2">V</th>
-            <th class="col-md-1">Rank</th>
-        </tr>
-        <?php
-        for($i = 0; $i < count($hasilwp); $i++) {
-            echo '<tr>
-                    <td class="col-md-4">'.$hasilwp[$i]['alternatif'].'</td>
-                    <td class="col-md-2">'.$hasilwp[$i]['vw'].'</td>
-                    <td class="col-md-2">'.($i+1).'</td>
-                </tr>';
-        }
-        ?>
-    </table>
+    <section class="table__header">
+        <h3 class="text-center">Hasil WP</h3>
+        <div class="well well-lg text-center">
+            <strong><?php echo $hasilwp[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-md-4">Alternatif</th>
+                    <th class="col-md-2">V</th>
+                    <th class="col-md-1">Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                for($i = 0; $i < count($hasilwp); $i++) {
+                    echo '<tr>
+                            <td class="col-md-4">'.$hasilwp[$i]['alternatif'].'</td>
+                            <td class="col-md-2">'.$hasilwp[$i]['vw'].'</td>
+                            <td class="col-md-2">'.($i+1).'</td>
+                        </tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </section>
 
     <!-- tombol laporan -->
     <br>
         <div class="row">
-            <div class="text-right">
+            <div class="text-right" style="margin-right: 5px">
                 <a class="btn btn-primary" href="laporan.php">Laporan</a>
             </div>
     <br>

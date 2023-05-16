@@ -1,6 +1,5 @@
 
-        </div>
-    </div>
+</main>
     <footer class="footer footer">
         <div class="container">
             <hr>

@@ -16,13 +16,13 @@
     ?>
     </title>
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="./css/styles.css" type="text/css" />
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="background-color: #E8F1FF; backdrop-filter: blur(7px); box-shadow: 0 .15rem .2rem #0005;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -66,5 +66,4 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
+    <main class="table container">
