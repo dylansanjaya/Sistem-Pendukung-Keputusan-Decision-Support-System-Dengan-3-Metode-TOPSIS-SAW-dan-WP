@@ -91,7 +91,23 @@ $req->execute();
 $vs = $req->fetchAll();
 
 //WP
+$req = $dbc->prepare("SELECT * FROM bobot_normal_w WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
 
+$bobot_normal_w = $req->fetch();
+
+$req = $dbc->prepare("SELECT * FROM s_normal_wp WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
+
+$sw = $req->fetchAll();
+
+$req = $dbc->prepare("SELECT * FROM ranking_wp WHERE id_pemilihan = ?");
+$req->bindParam(1, $_GET['id']);
+$req->execute();
+
+$vw = $req->fetchAll();
 
 $page_title = 'Detail Laporan';
 
@@ -151,6 +167,7 @@ include './includes/header.php';
             </tr>';
         ?>
     </table>
+
     <h3>Tabel Bobot Normal</h3>
     <table class="table table-bordered">
         <tr>
@@ -172,6 +189,7 @@ include './includes/header.php';
             </tr>';
         ?>
     </table>
+
     <br>
     </hr> 
     </div>
@@ -451,6 +469,76 @@ include './includes/header.php';
         <div>
             <h1>WP</h1>
         </div>
+        <h3>Tabel W Normal</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th class="col-md-2">C1</th>
+            <th class="col-md-2">C2</th>
+            <th class="col-md-2">C3</th>
+            <th class="col-md-2">C4</th>
+            <th class="col-md-2">C5</th>
+            <th class="col-md-2">C6</th>
+        </tr>
+        <?php
+        echo '<tr>
+                <td class="col-md-1">'.$bobot_normal_w['c1'].'</td>
+                <td class="col-md-1">'.$bobot_normal_w['c2'].'</td>
+                <td class="col-md-1">'.$bobot_normal_w['c3'].'</td>
+                <td class="col-md-1">'.$bobot_normal_w['c4'].'</td>
+                <td class="col-md-1">'.$bobot_normal_w['c5'].'</td>
+                <td class="col-md-1">'.$bobot_normal_w['c6'].'</td>
+            </tr>';
+        ?>
+    </table>
+    <h3>Tabel V</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td class="col-md-1">No</td>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">V</th>
+            </tr>
+            <?php
+            for($i = 0; $i < count($alternatif); $i++) {
+                echo '<tr>
+                        <td class="col-md-1">'.($i+1).'</td>
+                        <td class="col-md-10">'.$alternatif[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$vw[$i]['vw'].'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+        <?php
+        $hasilwp = array();
+
+        for($i = 0; $i < count($alternatif); $i++) {
+            $hasilwp[] = array(
+                "alternatif" => $alternatif[$i]['alternatif'],
+                "vw" => $vw[$i]['vw']
+            );
+        }
+
+        usort($hasilwp, function($a, $b) {
+            return $a['vw'] < $b['vw'];
+        });
+        ?>
+        <h3>Tabel Hasil Akhir</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th class="col-md-3">Alternatif</th>
+                <th class="col-md-1">V</th>
+                <td class="col-md-1">Rank</td>
+            </tr>
+            <?php
+            for($i = 0; $i < count($hasilwp); $i++) {
+                echo '<tr>
+                        <td class="col-md-3">'.$hasilwp[$i]['alternatif'].'</td>
+                        <td class="col-md-1">'.$hasilwp[$i]['vw'].'</td>
+                        <td class="col-md-1">'.($i+1).'</td>
+                    </tr>';
+            }
+            ?>
+        </table>
+
     </div>
 
 </div>

@@ -6,8 +6,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-if(!isset($_SESSION['matrik-v-saw'])) {
-    header('Location: matrik-v-saw.php');
+if(!isset($_SESSION['normalisasi-s-wp'])) {
+    header('Location: normalisasi-s-wp.php');
     exit;
 } else {
     $req = $dbc->prepare("SELECT * FROM pemilihan WHERE id = ?");
@@ -22,30 +22,35 @@ if(!isset($_SESSION['matrik-v-saw'])) {
 
     $alternatif = $req->fetchAll();
 
-    $req = $dbc->prepare("SELECT * FROM matrik_v_saw WHERE id_pemilihan = ?");
+    $req = $dbc->prepare("SELECT * FROM s_normal_wp WHERE id_pemilihan = ?");
     $req->bindParam(1, $_SESSION['id']);
     $req->execute();
 
-    $mvs = $req->fetchAll();
+    $swp = $req->fetchAll();
 }
 
-$vrs = array();
+$vwp = array();
 
-foreach ($mvs as $mvsKategori){
-    $vrs[] = round(($mvsKategori['c1']+$mvsKategori['c2']+$mvsKategori['c3']+$mvsKategori['c4']+$mvsKategori['c5']+$mvsKategori['c6']), 4);
+$totalswp = 0;
+foreach ($swp as $swpvalue) {
+    $totalswp += $swpvalue['s'];
 }
 
-$status = "ranking-saw";
-try {
+foreach ($swp as $swpvalue) {
+    $vwp[] = round(($swpvalue['s'] / $totalswp), 4);
+}
+
+$status = "nilai-v-wp";
+try{
     $dbc->beginTransaction();
 
-    $dbc->exec("DELETE FROM ranking_saw WHERE id_pemilihan = $_SESSION[id]");
+    $dbc->exec("DELETE FROM ranking_wp WHERE id_pemilihan = $_SESSION[id]");
 
-    $req = $dbc->prepare("INSERT INTO ranking_saw VALUES(:id, :vrs)");
+    $req = $dbc->prepare("INSERT INTO ranking_wp VALUES(:id, :s)");
     $req->bindValue(':id', $_SESSION['id']);
 
     for ($i = 0; $i < count($alternatif); $i++) {
-        $req->bindValue(':vrs', $vrs[$i]);
+        $req->bindValue(':s', $vwp[$i]);
         $req->execute();
     }
 
@@ -55,10 +60,11 @@ try {
     $req->execute();
 
     $dbc->commit();
-
-    $_SESSION['ranking-saw'] = true;
-    header('Location: normalisasi-w-wp.php');
+    
+    $_SESSION['nilai-v-wp'] = true;
+    header('Location: hasil.php');
     exit;
 } catch (PDOException $e) {
     $dbc->rollback();
 }
+

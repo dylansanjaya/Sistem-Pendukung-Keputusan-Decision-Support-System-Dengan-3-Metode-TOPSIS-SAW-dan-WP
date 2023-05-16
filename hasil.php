@@ -6,8 +6,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-if(!isset($_SESSION['ranking-saw'])) {
-    header('Location: ranking-saw.php');
+if(!isset($_SESSION['nilai-v-wp'])) {
+    header('Location: nilai-v-wp.php');
     exit;
 } else {
     $req = $dbc->prepare("SELECT * FROM pemilihan WHERE id = ?");
@@ -90,7 +90,7 @@ if(!isset($_SESSION['ranking-saw'])) {
 
         $dbc->exec("DELETE FROM hasil_saw WHERE id_pemilihan = $_SESSION[id]");
         
-        $req = $dbc->prepare("INSERT INTO hasil VALUES(:id, :alternatif, :vs)");
+        $req = $dbc->prepare("INSERT INTO hasil_saw VALUES(:id, :alternatif, :vs)");
         $req->bindValue(':id', $_SESSION['id']);
         $req->bindValue(':alternatif', $hasilsaw[0]['alternatif']);
         $req->bindValue(':vs', $hasilsaw[0]['vs']);
@@ -106,11 +106,57 @@ if(!isset($_SESSION['ranking-saw'])) {
         $dbc->rollback();
     }
 
-    //Topsis
+    //WP
+    $req = $dbc->prepare("SELECT * FROM ranking_wp WHERE id_pemilihan = ?");
+    $req->bindParam(1, $_SESSION['id']);
+    $req->execute();
+
+    $vw = $req->fetchAll();
+
+    $hasilwp = array();
+
+    for($i = 0; $i < count($alternatif); $i++) {
+        $hasilwp[] = array(
+            "alternatif" => $alternatif[$i]['alternatif'],
+            "vw" => $vw[$i]['vw']
+        );
+    }
+
+    usort($hasilwp, function($a, $b) {
+        return $a['vw'] < $b['vw'];
+    });
+
+    $status = "selesaiwp";
+    try{
+        $dbc->beginTransaction();
+
+        $dbc->exec("DELETE FROM hasil_wp WHERE id_pemilihan = $_SESSION[id]");
+
+        $req = $dbc->prepare("INSERT INTO hasil_wp VALUES(:id, :alternatif, :vw)");
+        $req->bindValue(':id', $_SESSION['id']);
+        $req->bindValue(':alternatif', $hasilwp[0]['alternatif']);
+        $req->bindValue(':vw', $hasilwp[0]['vw']);
+        $req->execute();
+
+        $req = $dbc->prepare("UPDATE pemilihan SET status = ? WHERE id = ?");
+        $req->bindParam(1, $status);
+        $req->bindParam(2, $_SESSION['id']);
+        $req->execute();
+
+        $dbc->commit();
+    } catch (PDOException $e) {
+        $dbc->rollback();
+    }
+
+//UNSET SESSION
+
+    //General
     unset($_SESSION['id']);
     unset($_SESSION['alternatif']);
     unset($_SESSION['nilai-alternatif']);
     unset($_SESSION['bobot']);
+
+    //TOPSIS
     unset($_SESSION['matrik-r']);
     unset($_SESSION['matrik-y']);
     unset($_SESSION['nilai-ideal']);
@@ -122,6 +168,11 @@ if(!isset($_SESSION['ranking-saw'])) {
     unset($_SESSION['matrik-r-saw']);
     unset($_SESSION['matrik-v-saw']);
     unset($_SESSION['ranking-saw']);
+
+    //WP
+    unset($_SESSION['normalisasi-w-wp']);
+    unset($_SESSION['normalisasi-s-wp']);
+    unset($_SESSION['nilai-v-wp']);
 }
 $page_title = 'Hasil';  
 
@@ -178,6 +229,29 @@ include './includes/header.php';
         }
         ?>
     </table>  
+
+    <!-- WP -->
+    <h3>Hasil WP</h3>
+    <div class="well well-lg text-center">
+        <strong><?php echo $hasilwp[0]['alternatif']; ?> sebagai alternatif terbaik.</strong>
+    </div>
+   
+    <table class="table table-bordered">
+        <tr>
+            <th class="col-md-4">Alternatif</th>
+            <th class="col-md-2">V</th>
+            <th class="col-md-1">Rank</th>
+        </tr>
+        <?php
+        for($i = 0; $i < count($hasilwp); $i++) {
+            echo '<tr>
+                    <td class="col-md-4">'.$hasilwp[$i]['alternatif'].'</td>
+                    <td class="col-md-2">'.$hasilwp[$i]['vw'].'</td>
+                    <td class="col-md-2">'.($i+1).'</td>
+                </tr>';
+        }
+        ?>
+    </table>
 
     <!-- tombol laporan -->
     <br>

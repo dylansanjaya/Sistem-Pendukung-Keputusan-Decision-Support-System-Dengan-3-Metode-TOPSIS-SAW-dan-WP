@@ -82,5 +82,4 @@ try {
 } catch (PDOException $e) {
     $dbc->rollback();
 }
-?>
 
