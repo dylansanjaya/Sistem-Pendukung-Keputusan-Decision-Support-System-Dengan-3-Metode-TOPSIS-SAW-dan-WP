@@ -34,7 +34,7 @@
                 <a class="navbar-brand" href="#">Sistem Pendukung Keputusan 3 Metode</a>
             </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="nav navbar-nav navbar-right" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                 <?php
                 $pages = array(
@@ -59,7 +59,7 @@
                 <ul class="nav navbar-nav navbar-right">
                 <?php
                 if (isset($_SESSION['admin'])) {
-                    echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>';
+                    echo '<li><a href="logout.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>';
                 }
                 ?>
                 </ul>

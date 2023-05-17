@@ -119,6 +119,11 @@ include './includes/header.php';
         <h4><?php echo $pemilihan['keterangan']; ?></h4>
     <br>
 
+    <?php
+    include './includes/criteriatable.php';
+    ?>
+    <br>
+    
     <section class="table__header">
         <h3>Tabel Nilai Alternatif</h3>
     </section>
@@ -185,35 +190,7 @@ include './includes/header.php';
         </table>
     </section>
 <br>
-    <section class="table__header">
-        <h3>Tabel Bobot Normal</h3>
-    </section>
-    <section class="table__body">
-        <table>
-            <thead>
-                <tr>
-                    <th class="col-md-2">C1</th>
-                    <th class="col-md-2">C2</th>
-                    <th class="col-md-2">C3</th>
-                    <th class="col-md-2">C4</th>
-                    <th class="col-md-2">C5</th>
-                    <th class="col-md-2">C6</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                echo '<tr>
-                        <td class="col-md-1">'.$bobot_normal['c1'].'</td>
-                        <td class="col-md-1">'.$bobot_normal['c2'].'</td>
-                        <td class="col-md-1">'.$bobot_normal['c3'].'</td>
-                        <td class="col-md-1">'.$bobot_normal['c4'].'</td>
-                        <td class="col-md-1">'.$bobot_normal['c5'].'</td>
-                        <td class="col-md-1">'.$bobot_normal['c6'].'</td>
-                    </tr>';
-                ?>
-            </tbody>
-        </table>
-    </section>
+    
 
     <br>
     </hr> 
@@ -432,6 +409,36 @@ include './includes/header.php';
         <div>
             <h2>SAW</h2>
         </div>
+        <section class="table__header">
+        <h3>Tabel Bobot Normal</h3>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-md-2">C1</th>
+                    <th class="col-md-2">C2</th>
+                    <th class="col-md-2">C3</th>
+                    <th class="col-md-2">C4</th>
+                    <th class="col-md-2">C5</th>
+                    <th class="col-md-2">C6</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                echo '<tr>
+                        <td class="col-md-1">'.$bobot_normal['c1'].'</td>
+                        <td class="col-md-1">'.$bobot_normal['c2'].'</td>
+                        <td class="col-md-1">'.$bobot_normal['c3'].'</td>
+                        <td class="col-md-1">'.$bobot_normal['c4'].'</td>
+                        <td class="col-md-1">'.$bobot_normal['c5'].'</td>
+                        <td class="col-md-1">'.$bobot_normal['c6'].'</td>
+                    </tr>';
+                ?>
+            </tbody>
+        </table>
+    </section>
+    <br>
         <section class="table__header">
             <h3>Normalisasi Matriks R</h3>
         </section>
