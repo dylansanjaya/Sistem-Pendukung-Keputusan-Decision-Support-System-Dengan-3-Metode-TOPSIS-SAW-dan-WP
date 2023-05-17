@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default" style="background-color: #E8F1FF; backdrop-filter: blur(7px); box-shadow: 0 .15rem .2rem #0005;">
+    <nav class="navbar navbar-default" style="background-color: #fff5; backdrop-filter: blur(7px); box-shadow: 0 .15rem .2rem #0005;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
