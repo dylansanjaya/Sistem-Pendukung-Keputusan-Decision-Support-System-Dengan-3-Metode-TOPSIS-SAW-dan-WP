@@ -12,7 +12,9 @@ html {
 }
 
 body {
-    background-color: #ddeaff;
+    /* background-color: #ddeaff; */
+    background: rgb(221,234,255);
+    background: linear-gradient(90deg, rgba(221,234,255,1) 0%, rgba(102,139,197,1) 100%);
     /* background: url(../img/html_table.jpg) center / cover; */
     min-height: 100vh;
     margin-bottom: 60px;
