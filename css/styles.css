@@ -34,6 +34,19 @@ main.table{
     overflow: hidden;
 }
 
+tr {
+    /* transition: all 0.9s ease-in-out; Atur durasi dan jenis transisi sesuai kebutuhan */
+    transition: .2s ease-in-out .5s;
+  }
+  
+  tr.slide-up {
+    transform: translateX(100%); /* Geser ke kanan sejauh 100% */
+    opacity: 0; /* Ubah opacity menjadi 0 (sehingga menghilang) */
+    padding: 0;
+    font: 0 / 0 sans-serif;
+    transition: .2s ease-in-out .5s;
+  }
+
 .btn-primary {
     background-color: #7f92ea;
     border-color: #7f92ea;
