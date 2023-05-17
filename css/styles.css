@@ -12,8 +12,8 @@ html {
 }
 
 body {
-    /* background-color: #ddeaff; */
-    background: url(./img/html_table.jpg) center / cover;
+    background-color: #ddeaff;
+    /* background: url(../img/html_table.jpg) center / cover; */
     min-height: 100vh;
     margin-bottom: 60px;
     display: block;
