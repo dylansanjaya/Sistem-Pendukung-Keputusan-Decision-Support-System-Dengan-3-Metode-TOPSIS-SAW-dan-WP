@@ -69,7 +69,12 @@ tr {
 }
 
 .navbar-nav .active a{
-    background-color: #567cb9;
+    background-color: #a3b4d0 !important;
+    border-top-left-radius: .6rem !important;
+    border-top-right-radius: .6rem !important;
+    border-bottom-right-radius: .6rem !important;
+    border-bottom-left-radius: .6rem !important;
+    color: whitesmoke !important;
 }
 
 .table__header {
@@ -79,6 +84,8 @@ tr {
     padding: .1rem 1rem;
     border-top-left-radius: .6rem;
     border-top-right-radius: .6rem;
+    border-bottom-left-radius: .6rem;
+    border-bottom-right-radius: .6rem;
 
     margin: auto;
 }

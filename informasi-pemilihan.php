@@ -58,7 +58,7 @@ include './includes/header.php';
     <form method="post">
         <div class="form-group">
             <label for="keterangan">Keterangan</label>
-            <input type="text" class="form-control" name="keterangan" placeholder="keterangan"
+            <input type="text" class="form-control" name="keterangan" placeholder="Keterangan"
             <?php if (isset($pemilihan)) echo 'value="'.$pemilihan['keterangan'].'"'?>
             >
         </div>
